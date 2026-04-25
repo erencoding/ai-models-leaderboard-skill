@@ -1,14 +1,14 @@
 ---
 name: ai-models-leaderboard
-description: Fetches AI model rankings from Artificial Analysis (artificialanalysis.ai) including Intelligence Index, Speed, Price, and latest news. Outputs via feishu_im_user_message as interactive card with lark_md tables. Use when user asks about AI model rankings, best LLM, model comparison, or wants latest leaderboard data.
-version: "1.0"
+description: Fetches AI model rankings from Artificial Analysis (artificialanalysis.ai) and replies directly with formatted markdown tables. Use when user asks about AI model rankings, best LLM, model comparison, or wants latest leaderboard data.
+version: "2.0"
 author: Judy (朱迪)
 license: MIT
 ---
 
 # AI Models Leaderboard Skill
 
-Fetches real-time AI model rankings from Artificial Analysis using Playwright and outputs as Feishu card with lark_md markdown tables.
+Fetches real-time AI model rankings from Artificial Analysis using Playwright and replies directly with formatted markdown tables. No cards, no screenshots to external accounts.
 
 ## Usage
 
@@ -24,7 +24,7 @@ AI leaderboard
 
 ## Workflow
 
-### Step 1: Screenshot
+### Step 1: Screenshot (optional, for reference only)
 
 ```bash
 node -e "
@@ -41,54 +41,70 @@ const { chromium } = require('/usr/lib/node_modules/playwright');
 "
 ```
 
-### Step 2: Send Feishu Card via feishu_im_user_message
+### Step 2: Reply directly via message tool
 
-Target: receive_id = ou_13198dff86df39f443084c8dc460d89f, receive_id_type = open_id
+Send the following formatted content directly in the current conversation:
 
-```json
-{
-  "header": {
-    "title": { "tag": "plain_text", "content": "🏆 Artificial Analysis · 核心数据" },
-    "template": "purple"
-  },
-  "elements": [
-    { "tag": "hr" },
-    {
-      "tag": "div",
-      "text": {
-        "tag": "lark_md",
-        "content": "**🌐 平台简介**\n\n第三方 AI 模型评估平台，专注性能评测与选型参考，不附属于任何模型厂商。"
-      }
-    },
-    { "tag": "hr" },
-    {
-      "tag": "div",
-      "text": {
-        "tag": "lark_md",
-        "content": "**📊 三大核心榜单**\n\n**Intelligence Index（综合智能指数）** — 综合10项评估\n\n| 排名 | 模型 | 分数 |\n|------|------|------|\n| 1 | GPT-5.5 (xhigh) | 60 |\n| 2 | Claude Opus 4.7 (max) | 57 |\n| 2 | Gemini 3.1 Pro Preview | 57 |\n| 4 | GPT-5.4 (xhigh) | 54 |\n| 5 | Kimi K2.6 | 54 |\n| 6 | DeepSeek V4 Pro (Max) | 52 |\n| ... | MiniMax-M2.7 | 50 |\n\n**Speed（输出速度）** — Tokens/秒\n\n| 排名 | 模型 | 速度 |\n|------|------|------|\n| 1 | gpt-oss-120B | 209 tps |\n| 2 | NVIDIA Nemotron 3 Super | 154 tps |\n| 3 | Gemini 3.1 Pro Preview | 123 tps |\n| 4 | Grok 4.20 0309 v2 | 115 tps |\n| 5 | Kimi K2.6 | 112 tps |\n\n**Price（价格）** — $/1M Tokens\n\n| 排名 | 模型 | 价格 |\n|------|------|------|\n| 1 | gpt-oss-120B | $0.30 |\n| 2 | NVIDIA Nemotron 3 Super | $0.40 |\n| 3 | DeepSeek V4 Flash | $0.14 |\n| 4 | DeepSeek V3.2 | $0.28 |\n| 5 | Mistral Small 4 | $0.15 |"
-      }
-    },
-    { "tag": "hr" },
-    {
-      "tag": "div",
-      "text": {
-        "tag": "lark_md",
-        "content": "**📰 最新动态（近5天）**\n- 24 Apr — DeepSeek V4 Pro/Flash 重回开源前列\n- 23 Apr — GPT-5.5 成为新领袖模型\n- 23 Apr — DeepSeek V4 全版本评测发布\n- 20 Apr — Kimi K2.6 成为新开源第一\n- 21 Apr — Claude Opus 4.7 评测上线"
-      }
-    },
-    { "tag": "hr" },
-    {
-      "tag": "div",
-      "text": {
-        "tag": "lark_md",
-        "content": "**来源：** https://artificialanalysis.ai"
-      }
-    }
-  ]
-}
+```
+🏆 Artificial Analysis · 核心数据
+
+---
+
+**🌐 平台简介**
+
+第三方 AI 模型评估平台，专注性能评测与选型参考，不附属于任何模型厂商。
+
+---
+
+**📊 三大核心榜单**
+
+**Intelligence Index（综合智能指数）** — 综合10项评估
+
+| 排名 | 模型 | 分数 |
+|------|------|------|
+| 1 | GPT-5.5 (xhigh) | 60 |
+| 2 | Claude Opus 4.7 (max) | 57 |
+| 2 | Gemini 3.1 Pro Preview | 57 |
+| 4 | GPT-5.4 (xhigh) | 54 |
+| 5 | Kimi K2.6 | 54 |
+| 6 | DeepSeek V4 Pro (Max) | 52 |
+| ... | MiniMax-M2.7 | 50 |
+
+**Speed（输出速度）** — Tokens/秒
+
+| 排名 | 模型 | 速度 |
+|------|------|------|
+| 1 | gpt-oss-120B | 209 tps |
+| 2 | NVIDIA Nemotron 3 Super | 154 tps |
+| 3 | Gemini 3.1 Pro Preview | 123 tps |
+| 4 | Grok 4.20 0309 v2 | 115 tps |
+| 5 | Kimi K2.6 | 112 tps |
+
+**Price（价格）** — $/1M Tokens
+
+| 排名 | 模型 | 价格 |
+|------|------|------|
+| 1 | gpt-oss-120B | $0.30 |
+| 2 | NVIDIA Nemotron 3 Super | $0.40 |
+| 3 | DeepSeek V4 Flash | $0.14 |
+| 4 | DeepSeek V3.2 | $0.28 |
+| 5 | Mistral Small 4 | $0.15 |
+
+---
+
+**📰 最新动态（近5天）**
+- 24 Apr — DeepSeek V4 Pro/Flash 重回开源前列
+- 23 Apr — GPT-5.5 成为新领袖模型
+- 23 Apr — DeepSeek V4 全版本评测发布
+- 20 Apr — Kimi K2.6 成为新开源第一
+- 21 Apr — Claude Opus 4.7 评测上线
+
+---
+
+**来源：** https://artificialanalysis.ai
 ```
 
-Note: The actual data (model names, scores, etc.) should be extracted from the live page using Playwright. The table data in this SKILL.md is an example placeholder. The agent should parse the actual rankings from the page on each run.
+Note: Actual data should be extracted from the live page. Table content above is a placeholder showing the expected format.
 
 ## Data Source
 
